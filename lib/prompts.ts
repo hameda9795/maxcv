@@ -153,12 +153,16 @@ ${job.description}
    - Clear section separators
    - Consistent spacing
 
-10. **RECRUITER TIPS (3 issues to fix):**
-    - Quantify EVERYTHING (numbers, percentages, scale)
-    - Use power verbs: Architected, Engineered, Optimized, Built, Deployed, Implemented, Designed, Led, Developed, Maintained
-    - Show progression and impact
-    - Include relevant certifications or training in PROFESSIONAL DEVELOPMENT section
-    - Keep consistent formatting
+10. **RECRUITER TIPS (CRITICAL - Jobscan requirement):**
+    - **WORD COUNT:** Target 1000+ words total (not 400-500)
+    - **MEASURABLE RESULTS:** Include 5-7 quantified achievements PER project (minimum 15 total)
+    - **Quantify EVERYTHING:** Every bullet point MUST have numbers, percentages, time saved, scale, impact
+    - Examples: "Reduced latency by 94% (5.2s → 281ms)", "Served 500+ concurrent users", "85% test coverage", "12+ APIs", "<2s response time"
+    - **Power verbs:** Architected, Engineered, Optimized, Built, Deployed, Implemented, Designed, Led, Developed, Maintained, Delivered, Achieved
+    - **NO negative phrases or clichés:** Avoid "responsible for", "helped with", "worked on", "tried to", "attempted"
+    - Use POSITIVE, ACTIVE language: "Developed", "Built", "Achieved" (not "was responsible for developing")
+    - **Show progression and impact** with concrete numbers
+    - Include PROFESSIONAL DEVELOPMENT section for bootcamp/training
     - Demonstrate continuous improvement and learning
 
 11. **HONESTY WHILE MAXIMIZING SCORE:**
@@ -214,27 +218,49 @@ Code Review | Technical Documentation | Bug Resolution | Engineering Practices |
 
 [CRITICAL: Use EXACT terms from job description, include both acronyms and full forms]
 
-PROFESSIONAL EXPERIENCE / KEY PROJECTS
+PROFESSIONAL EXPERIENCE
 
 [Project 1 - Most relevant to job] | [Start - End Date]
 [Title matching job description] | Java, Spring Boot, SQL, PostgreSQL, Docker, Git, Gradle
-• Developed and maintained [feature] using Java, Spring Boot, and SQL databases (PostgreSQL, DB2), achieving [metric] through focus on performance and scalability
-• Participated in agile ceremonies including sprint planning, daily stand-ups, and retrospectives, improving team delivery by [metric]
-• Collaborated closely with cross-functional teams (business analysts, developers, testers) to deliver production-ready solutions following quality and security guidelines
-• Implemented unit testing, integration testing, and system testing with JUnit and Mockito, achieving [X]% test coverage
-• Created and maintained technical documentation, ensuring clear knowledge transfer and adherence to engineering practices
-• Debugged and resolved [X] bugs, demonstrating strong analytical skills and attention to detail
-[CRITICAL: Each bullet must include:
- - 1-2 hard skills keywords from job description
- - Quantified metric/result
- - Soft skill integration (passionate, analytical, collaborative, etc.)
- - Action verbs (Developed, Implemented, Collaborated, Participated, Created, etc.)]
+• Developed and maintained [feature] using Java, Spring Boot, and SQL databases (PostgreSQL, DB2), achieving [metric]% performance improvement and serving [X]+ users with <[X]s response times
+• Architected scalable backend infrastructure with focus on performance, scalability, and maintainability, reducing system latency by [X]% ([Xs] → [Xs])
+• Participated in agile ceremonies including sprint planning, daily stand-ups, and retrospectives, improving team delivery efficiency by [X]% and achieving [X]% sprint completion rate
+• Collaborated closely with cross-functional teams (business analysts, developers, testers) across distributed locations, delivering [X]+ production-ready features following quality and security guidelines
+• Implemented comprehensive testing strategy with unit testing, integration testing, and system testing using JUnit and Mockito, achieving [X]% test coverage and reducing bugs by [X]%
+• Created and maintained technical documentation for [X]+ features, ensuring knowledge transfer and adherence to engineering practices, reducing onboarding time by [X]%
+• Debugged and resolved [X]+ critical bugs within [X] hours average resolution time, demonstrating strong analytical skills and commitment to code quality
+[CRITICAL:
+ - MINIMUM 5-7 bullets per project
+ - EVERY bullet must have quantified metric
+ - Include hard skills + soft skills + numbers
+ - NO negative phrases ("responsible for", "helped with")
+ - Use strong action verbs
+ - Each bullet should be detailed and specific]
 
-[Project 2]
-[Continue same pattern - integrate different keywords from job description]
+[Project 2 - Second most relevant] | [Start - End Date]
+[Title] | [Technologies]
+• [Action verb] [detailed task] using [specific technologies], resulting in [quantified improvement]: [metric]% increase in [performance/efficiency/quality]
+• [Action verb] [architecture/design work] achieving [scale metric]: [X]+ [users/requests/transactions] with [performance metric]
+• Implemented [specific feature] with [technologies], improving [metric] by [X]% and reducing [metric] by [X]%
+• Collaborated with [team composition] to deliver [X]+ features, participating in [agile ceremonies] and achieving [metric]% delivery success
+• Optimized [specific component] using [tools/practices], resulting in [X]% performance gain and [cost/time] savings of [metric]
+[Continue with 5-7 quantified bullets]
 
-[Project 3]
-[Continue pattern]
+[Project 3 - Third project if applicable] | [Start - End Date]
+[Title] | [Technologies]
+• [Developed/Built/Architected] [feature] with [technologies], serving [X]+ users and processing [X]+ [transactions/requests] daily
+• [Implemented/Deployed] [specific solution] achieving [metric]% improvement in [performance/quality/efficiency]
+• [Optimized/Enhanced] [component] reducing [metric] by [X]% and improving [metric] by [X]%
+• Collaborated in [agile/scrum] environment, participating in [ceremonies] and delivering [X]+ features with [X]% quality
+• Maintained [X]% test coverage through comprehensive testing with [tools], identifying and resolving [X]+ issues
+[Continue pattern with 5-7 quantified bullets]
+
+[CRITICAL REQUIREMENTS FOR WORD COUNT 1000+:
+ - Include 3-4 projects/experiences
+ - Each project needs 5-7 detailed bullet points
+ - Every bullet should be comprehensive with context + action + result + metrics
+ - Add details about scale, impact, technologies, team collaboration
+ - Expand on technical implementation details where relevant]
 
 EDUCATION
 [Degree] | [Institution] | [Location] | [Year]
@@ -288,12 +314,16 @@ SOFT SKILLS (Target: 0 issues):
 ✓ "Proficient in English" or "English proficient" if mentioned
 
 RECRUITER TIPS (Target: 0 issues):
-✓ Every bullet point quantified with numbers/metrics/percentages
-✓ Strong action verbs used (Developed, Maintained, Implemented, Collaborated, Participated, Created, Debugged)
+✓ WORD COUNT: 1000+ words total (not 400-500)
+✓ MEASURABLE RESULTS: 15+ quantified achievements total (5-7 per project)
+✓ Every bullet point has specific numbers/metrics/percentages
+✓ Strong action verbs used (Developed, Architected, Implemented, Delivered, Achieved - NOT "responsible for", "helped with")
+✓ NO negative phrases or clichés
 ✓ Production impact emphasized with scale metrics
 ✓ Consistent formatting throughout
 ✓ PROFESSIONAL DEVELOPMENT section for bootcamp/training
-✓ Continuous improvement demonstrated
+✓ 3-4 projects shown with detailed descriptions
+✓ Each bullet comprehensive and detailed (not short)
 
 FORMATTING (Target: 0 issues):
 ✓ Plain text, single column only
@@ -313,7 +343,22 @@ HONESTY:
 ✓ Accurate representation of experience level
 ✓ All claims backed by actual projects/achievements
 
-**NOW: Generate the complete CV following ALL requirements above. This CV must score 90+ on jobscan.co while being honest and compelling.**`;
+LENGTH & DETAIL:
+✓ Target 1000+ words total (current requirement)
+✓ 3-4 projects with 5-7 bullets each
+✓ Every bullet detailed and comprehensive
+✓ Section heading "PROFESSIONAL EXPERIENCE" only (not "PROFESSIONAL EXPERIENCE / KEY PROJECTS")
+
+**NOW: Generate the complete CV following ALL requirements above.
+
+CRITICAL REQUIREMENTS FOR 90+ SCORE:
+1. WORD COUNT: Minimum 1000 words (be detailed and comprehensive)
+2. MEASURABLE RESULTS: At least 15+ quantified achievements across all projects
+3. NO negative phrases: Use active, positive language only
+4. 3-4 projects shown with 5-7 detailed bullets each
+5. Section heading: "PROFESSIONAL EXPERIENCE" (not combined with "KEY PROJECTS")
+
+This CV must score 90+ on jobscan.co while being honest and compelling.**`;
 }
 
 /**
