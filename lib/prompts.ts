@@ -109,44 +109,73 @@ ${job.description}
    - Repeat in: Summary, Skills section, AND project descriptions
    - Never use synonyms - only exact matches
 
-5. **SOFT SKILLS INTEGRATION (2 issues to fix):**
-   - Common soft skills to include: ${softSkills || 'agile, collaboration, team-oriented, problem-solving, communication, analytical'}
-   - Integrate naturally: "Led agile team of 5", "Collaborated with cross-functional teams"
-   - Mention in summary AND experience bullets
+5. **SOFT SKILLS INTEGRATION (CRITICAL - 3 issues to fix):**
+   - Soft skills to explicitly mention: ${softSkills || 'agile, collaboration, team-oriented, problem-solving, communication, analytical, passionate'}
+   - MUST include: "passionate" (if job mentions it), "analytical skills", "working closely"
+   - Integration examples:
+     * "Passionate about writing clean, maintainable code"
+     * "Strong analytical skills applied to complex problem-solving"
+     * "Working closely with cross-functional teams including business analysts, developers, and testers"
+   - Mention in summary AND multiple experience bullets
    - Use exact phrases from job posting
 
-6. **SEARCHABILITY OPTIMIZATION (3 issues to fix):**
-   - Use standard ATS headings: PROFESSIONAL SUMMARY, CORE COMPETENCIES, TECHNICAL SKILLS, PROFESSIONAL EXPERIENCE, EDUCATION
-   - Include job title variations (Java Engineer, Java Developer, Software Engineer)
-   - Add acronyms with full forms: "REST API (Representational State Transfer)"
-   - Use industry-standard terms alongside company-specific ones
+6. **COMPANY/PRODUCT-SPECIFIC KEYWORDS (CRITICAL FOR CONTEXT):**
+   - If job mentions specific products/platforms, reference them if relevant:
+     * Company products (e.g., "Plexus", "Workflow", "Datamart", "Output")
+     * Domain-specific terms (e.g., "back-office", "workflow editor", "data warehouse", "reports")
+   - Integration: "Experience with workflow systems and back-office solutions"
+   - Only mention if you have relevant transferable experience
+   - Shows you read the job description carefully
 
-7. **FORMATTING FOR ATS (1 issue to fix):**
+7. **CRITICAL MISSING KEYWORDS (MUST INCLUDE IF APPLICABLE):**
+   - **SQL** - Mention both "SQL" AND specific databases ("PostgreSQL", "MySQL", "DB2")
+   - **Agile ceremonies** - "Sprint planning", "Daily stand-ups", "Retrospectives"
+   - **Quality practices** - "Quality guidelines", "Security guidelines", "Engineering practices"
+   - **Team composition** - "Business analysts", "Developers", "Testers", "Distributed team"
+   - **Technical practices** - "Technical documentation", "Bug resolution", "Code review"
+   - **Key attributes** - "Scalability", "Maintainability", "Performance", "Security"
+   - **Language proficiency** - "English proficient" or "Proficient in English"
+
+8. **SEARCHABILITY OPTIMIZATION (2 issues to fix):**
+   - Use standard ATS headings: PROFESSIONAL SUMMARY, CORE COMPETENCIES, PROFESSIONAL EXPERIENCE, EDUCATION
+   - Include job title variations (Java Engineer, Java Developer, Software Engineer)
+   - Add acronyms with full forms: "REST API (Representational State Transfer)", "SQL (Structured Query Language)"
+   - Use industry-standard terms alongside company-specific ones
+   - NO URLs or links (LinkedIn, GitHub) - these hurt ATS parsing
+
+9. **FORMATTING FOR ATS (1 issue to fix):**
    - Plain text only, no tables or columns
    - Use simple bullets (• or -)
    - No headers/footers
    - No text boxes or graphics
+   - No hyperlinks or URLs
    - Standard fonts implied (Arial, Calibri, Times New Roman)
    - Clear section separators
+   - Consistent spacing
 
-8. **RECRUITER TIPS (2 issues to fix):**
-   - Quantify EVERYTHING (numbers, percentages, scale)
-   - Use power verbs: Architected, Engineered, Optimized, Built, Deployed, Implemented, Designed, Led
-   - Show progression and impact
-   - Include relevant certifications or training
-   - Keep consistent formatting
+10. **RECRUITER TIPS (3 issues to fix):**
+    - Quantify EVERYTHING (numbers, percentages, scale)
+    - Use power verbs: Architected, Engineered, Optimized, Built, Deployed, Implemented, Designed, Led, Developed, Maintained
+    - Show progression and impact
+    - Include relevant certifications or training in PROFESSIONAL DEVELOPMENT section
+    - Keep consistent formatting
+    - Demonstrate continuous improvement and learning
 
-9. **HONESTY WHILE MAXIMIZING SCORE:**
-   - Never fabricate skills you don't have
-   - But USE EVERY SKILL YOU DO HAVE from the job description
-   - Frame bootcamp as "intensive professional training" or "professional development program"
-   - Connect previous career systematically: "Engineering background provides systematic problem-solving approach"
+11. **HONESTY WHILE MAXIMIZING SCORE:**
+    - Never fabricate skills you don't have
+    - But USE EVERY SKILL YOU DO HAVE from the job description
+    - Frame bootcamp as "intensive professional training" or "professional development program"
+    - Connect previous career systematically: "Engineering background provides systematic problem-solving approach"
 
-10. **CRITICAL RULES:**
+12. **CRITICAL RULES FOR 90+ SCORE:**
     - NEVER skip a keyword from job description if candidate has that skill
-    - ALWAYS use exact phrasing from job posting
-    - REPEAT important keywords across multiple sections
-    - Include soft skills explicitly (not just implied)
+    - ALWAYS use exact phrasing from job posting (not synonyms)
+    - REPEAT important keywords 2-4 times across different sections
+    - Include soft skills EXPLICITLY with exact phrases (not just implied)
+    - Mention SQL separately even if you list specific databases
+    - Include agile ceremony terms (sprint planning, stand-ups, retrospectives)
+    - Reference quality, security, maintainability, scalability explicitly
+    - NO URLs or contact links beyond email/phone
 
 ---
 
@@ -160,37 +189,46 @@ Generate a complete, ready-to-use CV in plain text format. Use this EXACT struct
 
 PROFESSIONAL SUMMARY
 [3-4 lines with: job title match + top 5-7 hard skills + 2-3 soft skills + key metrics]
-EXAMPLE: "Java Software Engineer with 6 months intensive professional development and 14 years engineering background. Expertise in Java, Spring Boot, PostgreSQL, Git, and Gradle. Proven experience in agile development, cross-functional collaboration, and system integration. Delivered production systems serving 500+ concurrent users with <2s response times and 85% test coverage using JUnit and Mockito."
+EXAMPLE: "Java Software Engineer with 6 months intensive professional development and 14 years engineering background. Expertise in Java, Spring Boot, SQL databases (PostgreSQL, DB2, MySQL), Git, and Gradle. Passionate about writing scalable, maintainable code with strong analytical skills. Proven experience in agile development, sprint planning, and cross-functional team collaboration with business analysts, developers, and testers. Delivered production systems serving 500+ concurrent users with <2s response times and 85% test coverage."
 
 CORE COMPETENCIES
-[List ALL matching keywords from job description, grouped by category]
+[List ALL matching keywords from job description, grouped by category. CRITICAL: Include SQL separately + specific databases]
 
 Programming Languages & Frameworks:
 Java | Spring Boot | React.js | Angular | TypeScript
 
 Databases & Data Management:
-PostgreSQL | MySQL | DB2 | Database Design | Query Optimization
+SQL (Structured Query Language) | PostgreSQL | MySQL | DB2 | Database Design | Query Optimization
 
 Development Tools & Practices:
-Git | Gradle | Docker | CI/CD (Continuous Integration/Continuous Deployment) | Agile Methodologies | Scrum
+Git | Gradle | Docker | CI/CD (Continuous Integration/Continuous Deployment) | Agile Methodologies | Scrum | Sprint Planning | Daily Stand-ups | Retrospectives
 
 Testing & Quality:
-Unit Testing | Integration Testing | System Testing | JUnit | Mockito | Test Coverage
+Unit Testing | Integration Testing | System Testing | JUnit | Mockito | Test Coverage | Quality Guidelines | Security Guidelines
 
-Additional Skills:
-REST API (Representational State Transfer) | Microservices Architecture | Performance Optimization | Code Review | Technical Documentation
+Architecture & Performance:
+REST API (Representational State Transfer) | Microservices Architecture | Performance | Scalability | Maintainability
 
-[Include acronyms with full forms, use EXACT terms from job description]
+Engineering Practices:
+Code Review | Technical Documentation | Bug Resolution | Engineering Practices | Debugging
+
+[CRITICAL: Use EXACT terms from job description, include both acronyms and full forms]
 
 PROFESSIONAL EXPERIENCE / KEY PROJECTS
 
 [Project 1 - Most relevant to job] | [Start - End Date]
-[Title matching job description] | Java, Spring Boot, PostgreSQL, Docker, Git
-• [Action verb] [task] using [keyword from job] resulting in [metric] - mention agile/collaboration if relevant
-• [Action verb] [task] with [keyword from job] achieving [metric] - integrate technical skills naturally
-• [Action verb] [task] leveraging [keyword from job] to [result with number]
-• Collaborated with cross-functional teams using agile methodologies to deliver production-ready solutions
-[CRITICAL: Each bullet should include 1-2 keywords from job description + quantified result + soft skill if applicable]
+[Title matching job description] | Java, Spring Boot, SQL, PostgreSQL, Docker, Git, Gradle
+• Developed and maintained [feature] using Java, Spring Boot, and SQL databases (PostgreSQL, DB2), achieving [metric] through focus on performance and scalability
+• Participated in agile ceremonies including sprint planning, daily stand-ups, and retrospectives, improving team delivery by [metric]
+• Collaborated closely with cross-functional teams (business analysts, developers, testers) to deliver production-ready solutions following quality and security guidelines
+• Implemented unit testing, integration testing, and system testing with JUnit and Mockito, achieving [X]% test coverage
+• Created and maintained technical documentation, ensuring clear knowledge transfer and adherence to engineering practices
+• Debugged and resolved [X] bugs, demonstrating strong analytical skills and attention to detail
+[CRITICAL: Each bullet must include:
+ - 1-2 hard skills keywords from job description
+ - Quantified metric/result
+ - Soft skill integration (passionate, analytical, collaborative, etc.)
+ - Action verbs (Developed, Implemented, Collaborated, Participated, Created, etc.)]
 
 [Project 2]
 [Continue same pattern - integrate different keywords from job description]
@@ -224,33 +262,46 @@ EDUCATION
 
 SEARCHABILITY (Target: 0 issues):
 ✓ All job description keywords present EXACTLY as written
-✓ Acronyms included with full forms (CI/CD, REST API, etc.)
-✓ Standard ATS section headers used
+✓ Acronyms included with full forms (CI/CD, REST API, SQL)
+✓ Standard ATS section headers used (PROFESSIONAL SUMMARY, CORE COMPETENCIES, PROFESSIONAL EXPERIENCE, EDUCATION)
 ✓ Job title variations included
+✓ NO URLs or hyperlinks (LinkedIn, GitHub, etc.)
 
 HARD SKILLS (Target: 0 issues):
+✓ SQL mentioned separately AND specific databases (PostgreSQL, DB2, MySQL)
 ✓ Every technical skill from job description included if candidate has it
-✓ Skills repeated 2-4 times across sections (summary + core competencies + experience)
-✓ EXACT terminology used (no synonyms)
-✓ Technical skills in CORE COMPETENCIES section
+✓ Skills repeated 2-4 times across sections (summary + core competencies + experience bullets)
+✓ EXACT terminology used (no synonyms) - PostgreSQL not Postgres, Git not version control
+✓ Comprehensive CORE COMPETENCIES section with ALL matching keywords
 ✓ Skills integrated in project descriptions with context
+✓ Performance, Scalability, Maintainability, Security mentioned explicitly
+✓ Technical Documentation, Bug Resolution, Code Review mentioned
+✓ Agile ceremonies: Sprint Planning, Daily Stand-ups, Retrospectives
 
 SOFT SKILLS (Target: 0 issues):
-✓ Soft skills from job description explicitly mentioned (agile, collaboration, analytical, problem-solving)
+✓ "Passionate" explicitly mentioned (if in job description)
+✓ "Analytical skills" explicitly mentioned
+✓ "Working closely" or "collaborating closely" with teams
+✓ Team composition mentioned: "business analysts, developers, testers"
 ✓ Soft skills in professional summary
-✓ Soft skills demonstrated in experience bullets
+✓ Soft skills demonstrated in multiple experience bullets
+✓ "Proficient in English" or "English proficient" if mentioned
 
 RECRUITER TIPS (Target: 0 issues):
-✓ Every bullet point quantified with numbers/metrics
-✓ Strong action verbs used (Architected, Engineered, Optimized, Built, Deployed)
-✓ Production impact emphasized
+✓ Every bullet point quantified with numbers/metrics/percentages
+✓ Strong action verbs used (Developed, Maintained, Implemented, Collaborated, Participated, Created, Debugged)
+✓ Production impact emphasized with scale metrics
 ✓ Consistent formatting throughout
+✓ PROFESSIONAL DEVELOPMENT section for bootcamp/training
+✓ Continuous improvement demonstrated
 
 FORMATTING (Target: 0 issues):
 ✓ Plain text, single column only
 ✓ No tables, graphics, or complex formatting
-✓ Standard bullets and clear sections
+✓ No URLs or hyperlinks
+✓ Standard bullets (•) and clear sections
 ✓ Professional appearance
+✓ Consistent spacing
 
 KEYWORD DENSITY:
 ✓ Top 10 keywords from job appear 2-4 times each
@@ -359,26 +410,35 @@ export function extractAdvancedKeywords(jobDescription: string): {
     /\b(Java|JavaScript|TypeScript|Python|C\+\+|C#|Ruby|Go|Rust|Scala|Kotlin)\b/gi,
     // Frameworks
     /\b(Spring Boot|Spring|React\.?js|Angular|Vue\.?js|Node\.?js|Django|Flask|Express)\b/gi,
-    // Databases
-    /\b(PostgreSQL|MySQL|MongoDB|Redis|Oracle|SQL Server|DB2|Cassandra|DynamoDB)\b/gi,
+    // Databases & SQL
+    /\b(SQL|PostgreSQL|MySQL|MongoDB|Redis|Oracle|SQL Server|DB2|Cassandra|DynamoDB)\b/gi,
+    /\b(Database|Databases|Data warehouse|Query Optimization)\b/gi,
     // Cloud & DevOps
     /\b(AWS|Azure|GCP|Google Cloud|Docker|Kubernetes|Jenkins|GitLab|CI\/CD|Terraform)\b/gi,
     // Tools
     /\b(Git|Gradle|Maven|npm|Webpack|Jira|Confluence)\b/gi,
     // Testing
-    /\b(JUnit|Mockito|Jest|Mocha|Selenium|Cypress|Unit Testing|Integration Testing|System Testing)\b/gi,
-    // Architecture
+    /\b(JUnit|Mockito|Jest|Mocha|Selenium|Cypress|Unit Testing|Integration Testing|System Testing|Test Coverage)\b/gi,
+    // Architecture & Practices
     /\b(Microservices|REST\s?API|GraphQL|SOAP|Event-Driven|Serverless)\b/gi,
-    // Methodologies
+    /\b(Performance|Scalability|Maintainability|Security|Quality)\b/gi,
+    /\b(Architecture|Architectural|Design|Code Review|Refactoring|Debugging|Bug Resolution)\b/gi,
+    /\b(Technical Documentation|Documentation|Engineering Practices)\b/gi,
+    // Methodologies & Agile
     /\b(Agile|Scrum|Kanban|TDD|BDD|DevOps)\b/gi,
+    /\b(Sprint Planning|Daily Stand-ups|Stand-ups|Retrospectives|Code Reviews)\b/gi,
+    // Company/Product Specific (will catch if mentioned)
+    /\b(Plexus|Workflow|Datamart|Output)\b/gi,
   ];
 
   // Soft skills patterns
   const softSkillPatterns = [
-    /\b(agile|scrum|collaboration|collaborative|team\s?player|team\s?oriented|team\s?work)\b/gi,
-    /\b(communication|analytical|problem[\s-]solving|critical thinking)\b/gi,
-    /\b(leadership|mentoring|cross[\s-]functional)\b/gi,
-    /\b(attention to detail|quality[\s-]focused|quality[\s-]oriented)\b/gi,
+    /\b(agile|scrum|collaboration|collaborative|collaborating|team\s?player|team\s?oriented|team\s?work|teamwork)\b/gi,
+    /\b(communication|communicating|analytical|analytical\s?skills|problem[\s-]solving|critical\s?thinking)\b/gi,
+    /\b(leadership|mentoring|cross[\s-]functional|cross\s?functional)\b/gi,
+    /\b(attention\s?to\s?detail|quality[\s-]focused|quality[\s-]oriented|quality|passionate|passion)\b/gi,
+    /\b(professional|proficient|proficiency|English|working\s?together|working\s?closely)\b/gi,
+    /\b(business\s?analysts?|developers?|testers?|distributed\s?team)\b/gi,
   ];
 
   const hardSkills: Set<string> = new Set();
@@ -403,9 +463,15 @@ export function extractAdvancedKeywords(jobDescription: string): {
   // Extract additional context keywords
   const contextKeywords = extractContextKeywords(text);
 
+  // Ensure important soft skills are always included
+  const defaultSoftSkills = [
+    'agile', 'collaboration', 'team-oriented', 'analytical',
+    'problem-solving', 'passionate', 'cross-functional', 'communication'
+  ];
+
   return {
     hardSkills: Array.from(hardSkills),
-    softSkills: Array.from(new Set([...softSkills, ...['agile', 'collaboration', 'team-oriented', 'analytical', 'problem-solving']])).slice(0, 10),
+    softSkills: Array.from(new Set([...softSkills, ...defaultSoftSkills])).slice(0, 15),
     tools: Array.from(hardSkills).filter(skill =>
       /git|gradle|maven|docker|jenkins|jira/i.test(skill)
     ),
@@ -432,6 +498,9 @@ function extractContextKeywords(text: string): string[] {
     'performance', 'scalability', 'optimization', 'architecture', 'design',
     'development', 'implementation', 'deployment', 'production', 'testing',
     'documentation', 'code review', 'refactoring', 'debugging', 'monitoring',
+    'maintainability', 'security', 'quality', 'workflow', 'framework',
+    'configuration', 'automated', 'manual', 'reports', 'customers', 'clients',
+    'solutions', 'ecosystem', 'guidelines', 'practices', 'bugs', 'resolution',
   ];
 
   const words = text
