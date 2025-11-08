@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  name          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  profile       Profile?
+  applications  JobApplication[]
+}
+
+model Profile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Personal Information
+  fullName          String
+  email             String
+  phone             String?
+  location          String?
+
+  // Professional Summary
+  professionalTitle String?
+  yearsOfExperience Float?
+  bootcampInfo      String?  // Details about bootcamp/training
+  backgroundYears   Int?     // Years in previous career
+  backgroundField   String?  // Previous career field
+
+  // Education (JSON array of education entries)
+  education         Json?
+
+  // Technical Skills (JSON object with categories)
+  technicalSkills   Json?
+
+  // Projects (JSON array of project entries)
+  projects          Json?
+
+  // Achievements (JSON array of achievements)
+  achievements      Json?
+
+  // Work Experience (JSON array of work entries)
+  workExperience    Json?
+
+  // Additional Info
+  certifications    Json?
+  languages         Json?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model JobApplication {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Job Details
+  jobTitle          String
+  companyName       String
+  jobDescription    String   @db.Text
+
+  // Application Status
+  status            String   @default("draft") // draft, applied, interview, rejected, accepted
+  appliedDate       DateTime?
+
+  // Generated Documents
+  documents         GeneratedDocument[]
+
+  // Notes
+  notes             String?  @db.Text
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model GeneratedDocument {
+  id                String   @id @default(cuid())
+  applicationId     String
+  application       JobApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  // Document Type
+  type              String   // "cv" or "cover_letter"
+
+  // Content
+  content           String   @db.Text
+
+  // AI Generation Info
+  aiModel           String?
+  promptUsed        String?  @db.Text
+  tokensUsed        Int?
+
+  // Version Control
+  version           Int      @default(1)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([applicationId])
+}
