@@ -1,11 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import CVFormatter from '@/components/CVFormatter';
 import { exportToPDF, exportToDOCX, generateFileName } from '@/lib/cvExport';
 
 export default function ApplicationPage() {
+  const searchParams = useSearchParams();
+  const applicationId = searchParams.get('id');
+
   const [email, setEmail] = useState('hameda9795@gmail.com');
   const [jobTitle, setJobTitle] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -14,6 +18,48 @@ export default function ApplicationPage() {
   const [generatedCV, setGeneratedCV] = useState('');
   const [generatedCoverLetter, setGeneratedCoverLetter] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Load existing application if ID is provided
+  useEffect(() => {
+    if (applicationId) {
+      loadApplication(applicationId);
+    }
+  }, [applicationId]);
+
+  const loadApplication = async (id: string) => {
+    setLoading(true);
+    try {
+      // Fetch applications for the user
+      const response = await fetch(`/api/applications?email=${encodeURIComponent(email)}`);
+      const data = await response.json();
+
+      if (data.success) {
+        // Find the specific application
+        const app = data.applications.find((a: any) => a.id === id);
+
+        if (app) {
+          setJobTitle(app.jobTitle);
+          setCompanyName(app.companyName);
+          setJobDescription(app.jobDescription);
+
+          // Load documents if they exist
+          if (app.documents && app.documents.length > 0) {
+            const cvDoc = app.documents.find((d: any) => d.type === 'cv');
+            const coverLetterDoc = app.documents.find((d: any) => d.type === 'cover_letter');
+
+            if (cvDoc) setGeneratedCV(cvDoc.content);
+            if (coverLetterDoc) setGeneratedCoverLetter(coverLetterDoc.content);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error loading application:', error);
+      setError('Error loading application');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleGenerate = async () => {
     setGenerating(true);
@@ -148,6 +194,17 @@ export default function ApplicationPage() {
     alert('Copied to clipboard!');
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading application...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -174,7 +231,19 @@ export default function ApplicationPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">New Job Application</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">
+            {applicationId ? 'View Application' : 'New Job Application'}
+          </h1>
+          {applicationId && (
+            <Link
+              href="/application"
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            >
+              + New Application
+            </Link>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Input Section */}
