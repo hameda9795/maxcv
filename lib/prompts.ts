@@ -18,6 +18,10 @@ export function generateCVPrompt(profile: UserProfile, job: JobPosting): string 
 
   return `You are an expert ATS CV writer with deep knowledge of jobscan.co scoring algorithms. Your goal is to create a CV that scores 90+ on jobscan.co while remaining honest and professional.
 
+**CRITICAL OUTPUT INSTRUCTION:**
+Do NOT include ANY explanatory text, preamble, meta-commentary, or thinking at the beginning of your response. Do NOT write things like "Given the constraints..." or "Based on the requirements...".
+Start your output DIRECTLY with the candidate's full name. The first line of your output must be the candidate's name.
+
 ## JOB ANALYSIS (CRITICAL - READ FIRST):
 
 **Job Level Detected:** ${jobLevel}
@@ -210,7 +214,16 @@ ${job.description}
 
 ## OUTPUT FORMAT (OPTIMIZED FOR JOBSCAN.CO 90+ SCORE):
 
-Generate a complete, ready-to-use CV in plain text format. Use this EXACT structure:
+Generate a complete, ready-to-use CV in PLAIN TEXT format. NO markdown formatting allowed.
+
+**CRITICAL FORMATTING RULES:**
+- Headings must be plain text in ALL CAPS (e.g., "PROFESSIONAL SUMMARY")
+- Do NOT use markdown symbols like ** or # for headings
+- Do NOT use bold markers (**text**)
+- Use simple bullet points (•)
+- Plain text only - the CV will be formatted by the display component
+
+Use this EXACT structure:
 
 \`\`\`
 [FULL NAME]
@@ -336,12 +349,14 @@ ${hardSkills} | ${tools} | ${softSkills} | Agile/Scrum | [Add job-specific terms
 \`\`\`
 
 **CRITICAL FORMATTING RULES:**
-- Use standard section headers in ALL CAPS
+- Use standard section headers in ALL CAPS (plain text, NO ** symbols or # symbols)
+- Do NOT use markdown formatting - headings like "PROFESSIONAL SUMMARY" not "**PROFESSIONAL SUMMARY**"
 - Use pipe symbols (|) to separate information clearly
 - Use bullet points (•) for achievements
 - Keep line spacing consistent
 - NO tables, NO columns, NO graphics
 - Each section clearly separated by blank line
+- Plain text only - formatting will be applied by the display component
 
 ---
 
@@ -421,7 +436,20 @@ CRITICAL REQUIREMENTS FOR 90+ SCORE:
 4. 3-4 projects shown with 5-7 detailed bullets each
 5. Section heading: "PROFESSIONAL EXPERIENCE" (not combined with "KEY PROJECTS")
 
-This CV must score 90+ on jobscan.co while being honest and compelling.**`;
+This CV must score 90+ on jobscan.co while being honest and compelling.**
+
+---
+
+**FINAL OUTPUT INSTRUCTIONS (READ CAREFULLY):**
+
+1. OUTPUT ONLY THE CV TEXT - Do NOT include any explanations, preambles, or meta-commentary
+2. START DIRECTLY WITH THE CANDIDATE'S NAME on the first line
+3. Do NOT write things like "Given the constraints..." or "Based on the requirements..." or "Here is the CV..."
+4. Use PLAIN TEXT for all headings - NO markdown symbols (**, #, etc.)
+5. Headings should be: "PROFESSIONAL SUMMARY" NOT "**PROFESSIONAL SUMMARY**"
+6. The CV should be ready to copy-paste immediately
+
+NOW GENERATE THE CV - Start with the candidate's name:`;
 }
 
 /**
@@ -429,6 +457,9 @@ This CV must score 90+ on jobscan.co while being honest and compelling.**`;
  */
 export function generateCoverLetterPrompt(profile: UserProfile, job: JobPosting): string {
   return `You are an expert cover letter writer for software engineering positions. Create a compelling, personalized cover letter that demonstrates genuine interest and strong fit.
+
+**CRITICAL OUTPUT INSTRUCTION:**
+Do NOT include ANY explanatory text, preamble, meta-commentary, or thinking at the beginning of your response. Start your output DIRECTLY with "Dear Hiring Manager,". Do NOT write things like "Here is the cover letter..." or "Based on the requirements...".
 
 ## CANDIDATE PROFILE:
 ${JSON.stringify(profile, null, 2)}
@@ -497,7 +528,13 @@ Sincerely,
 ${profile.fullName}
 \`\`\`
 
-NOW: Generate the complete cover letter following ALL requirements above.`;
+**FINAL OUTPUT INSTRUCTIONS:**
+1. OUTPUT ONLY THE COVER LETTER TEXT - No explanations or preambles
+2. START DIRECTLY with "Dear Hiring Manager,"
+3. Use plain text, no markdown formatting
+4. The letter should be ready to copy-paste immediately
+
+NOW: Generate the complete cover letter following ALL requirements above. Start with "Dear Hiring Manager,":`;
 }
 
 /**
