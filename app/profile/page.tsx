@@ -318,6 +318,507 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          {/* Work Experience */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Work Experience</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  const newExp = {
+                    title: '',
+                    company: '',
+                    location: '',
+                    startDate: '',
+                    endDate: '',
+                    current: false,
+                    responsibilities: [''],
+                    achievements: [''],
+                  };
+                  updateProfile('workExperience', [...(profile.workExperience || []), newExp]);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+              >
+                + Add Experience
+              </button>
+            </div>
+
+            {profile.workExperience && profile.workExperience.length > 0 ? (
+              <div className="space-y-6">
+                {profile.workExperience.map((exp, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex justify-between mb-4">
+                      <h3 className="text-lg font-medium">Experience {index + 1}</h3>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = profile.workExperience?.filter((_, i) => i !== index);
+                          updateProfile('workExperience', updated);
+                        }}
+                        className="text-red-600 hover:text-red-800 text-sm"
+                      >
+                        Remove
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Job Title *
+                        </label>
+                        <input
+                          type="text"
+                          value={exp.title}
+                          onChange={(e) => {
+                            const updated = [...(profile.workExperience || [])];
+                            updated[index].title = e.target.value;
+                            updateProfile('workExperience', updated);
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Company *
+                        </label>
+                        <input
+                          type="text"
+                          value={exp.company}
+                          onChange={(e) => {
+                            const updated = [...(profile.workExperience || [])];
+                            updated[index].company = e.target.value;
+                            updateProfile('workExperience', updated);
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Location
+                        </label>
+                        <input
+                          type="text"
+                          value={exp.location || ''}
+                          onChange={(e) => {
+                            const updated = [...(profile.workExperience || [])];
+                            updated[index].location = e.target.value;
+                            updateProfile('workExperience', updated);
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Start Date (e.g., Jan 2023)
+                        </label>
+                        <input
+                          type="text"
+                          value={exp.startDate}
+                          onChange={(e) => {
+                            const updated = [...(profile.workExperience || [])];
+                            updated[index].startDate = e.target.value;
+                            updateProfile('workExperience', updated);
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          End Date (leave empty if current)
+                        </label>
+                        <input
+                          type="text"
+                          value={exp.endDate || ''}
+                          disabled={exp.current}
+                          onChange={(e) => {
+                            const updated = [...(profile.workExperience || [])];
+                            updated[index].endDate = e.target.value;
+                            updateProfile('workExperience', updated);
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={exp.current || false}
+                          onChange={(e) => {
+                            const updated = [...(profile.workExperience || [])];
+                            updated[index].current = e.target.checked;
+                            if (e.target.checked) {
+                              updated[index].endDate = undefined;
+                            }
+                            updateProfile('workExperience', updated);
+                          }}
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <label className="ml-2 text-sm text-gray-700">
+                          Currently working here
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="mt-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Responsibilities (one per line)
+                      </label>
+                      <textarea
+                        value={exp.responsibilities.join('\n')}
+                        onChange={(e) => {
+                          const updated = [...(profile.workExperience || [])];
+                          updated[index].responsibilities = e.target.value.split('\n').filter(r => r.trim());
+                          updateProfile('workExperience', updated);
+                        }}
+                        rows={4}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">No work experience added yet.</p>
+            )}
+          </div>
+
+          {/* Projects */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Projects</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  const newProject = {
+                    name: '',
+                    description: '',
+                    technologies: [],
+                    metrics: [],
+                    status: 'development' as const,
+                  };
+                  updateProfile('projects', [...(profile.projects || []), newProject]);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+              >
+                + Add Project
+              </button>
+            </div>
+
+            {profile.projects && profile.projects.length > 0 ? (
+              <div className="space-y-6">
+                {profile.projects.map((project, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex justify-between mb-4">
+                      <h3 className="text-lg font-medium">Project {index + 1}</h3>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = profile.projects?.filter((_, i) => i !== index);
+                          updateProfile('projects', updated);
+                        }}
+                        className="text-red-600 hover:text-red-800 text-sm"
+                      >
+                        Remove
+                      </button>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Project Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={project.name}
+                          onChange={(e) => {
+                            const updated = [...(profile.projects || [])];
+                            updated[index].name = e.target.value;
+                            updateProfile('projects', updated);
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Description *
+                        </label>
+                        <textarea
+                          value={project.description}
+                          onChange={(e) => {
+                            const updated = [...(profile.projects || [])];
+                            updated[index].description = e.target.value;
+                            updateProfile('projects', updated);
+                          }}
+                          rows={3}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Technologies (comma-separated)
+                        </label>
+                        <input
+                          type="text"
+                          value={project.technologies.join(', ')}
+                          onChange={(e) => {
+                            const updated = [...(profile.projects || [])];
+                            updated[index].technologies = e.target.value.split(',').map(t => t.trim()).filter(t => t);
+                            updateProfile('projects', updated);
+                          }}
+                          placeholder="Java, Spring Boot, PostgreSQL"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Metrics/Achievements (one per line)
+                        </label>
+                        <textarea
+                          value={project.metrics?.join('\n') || ''}
+                          onChange={(e) => {
+                            const updated = [...(profile.projects || [])];
+                            updated[index].metrics = e.target.value.split('\n').filter(m => m.trim());
+                            updateProfile('projects', updated);
+                          }}
+                          rows={3}
+                          placeholder="500+ concurrent users&#10;<2s response time&#10;85% test coverage"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Status
+                          </label>
+                          <select
+                            value={project.status || 'development'}
+                            onChange={(e) => {
+                              const updated = [...(profile.projects || [])];
+                              updated[index].status = e.target.value as 'production' | 'development' | 'completed';
+                              updateProfile('projects', updated);
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          >
+                            <option value="development">Development</option>
+                            <option value="production">Production</option>
+                            <option value="completed">Completed</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            URL (optional)
+                          </label>
+                          <input
+                            type="url"
+                            value={project.url || ''}
+                            onChange={(e) => {
+                              const updated = [...(profile.projects || [])];
+                              updated[index].url = e.target.value;
+                              updateProfile('projects', updated);
+                            }}
+                            placeholder="https://example.com"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">No projects added yet.</p>
+            )}
+          </div>
+
+          {/* Education */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Education</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  const newEdu = {
+                    degree: '',
+                    institution: '',
+                    location: '',
+                    graduationYear: '',
+                  };
+                  updateProfile('education', [...(profile.education || []), newEdu]);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+              >
+                + Add Education
+              </button>
+            </div>
+
+            {profile.education && profile.education.length > 0 ? (
+              <div className="space-y-4">
+                {profile.education.map((edu, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex justify-between mb-4">
+                      <h3 className="text-sm font-medium">Education {index + 1}</h3>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = profile.education?.filter((_, i) => i !== index);
+                          updateProfile('education', updated);
+                        }}
+                        className="text-red-600 hover:text-red-800 text-sm"
+                      >
+                        Remove
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Degree *
+                        </label>
+                        <input
+                          type="text"
+                          value={edu.degree}
+                          onChange={(e) => {
+                            const updated = [...(profile.education || [])];
+                            updated[index].degree = e.target.value;
+                            updateProfile('education', updated);
+                          }}
+                          placeholder="B.S. Computer Science"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Institution *
+                        </label>
+                        <input
+                          type="text"
+                          value={edu.institution}
+                          onChange={(e) => {
+                            const updated = [...(profile.education || [])];
+                            updated[index].institution = e.target.value;
+                            updateProfile('education', updated);
+                          }}
+                          placeholder="University Name"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Location
+                        </label>
+                        <input
+                          type="text"
+                          value={edu.location || ''}
+                          onChange={(e) => {
+                            const updated = [...(profile.education || [])];
+                            updated[index].location = e.target.value;
+                            updateProfile('education', updated);
+                          }}
+                          placeholder="City, Country"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Graduation Year
+                        </label>
+                        <input
+                          type="text"
+                          value={edu.graduationYear || ''}
+                          onChange={(e) => {
+                            const updated = [...(profile.education || [])];
+                            updated[index].graduationYear = e.target.value;
+                            updateProfile('education', updated);
+                          }}
+                          placeholder="2020"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">No education added yet.</p>
+            )}
+          </div>
+
+          {/* Achievements */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Key Achievements</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  const newAchievement = {
+                    description: '',
+                    metric: '',
+                  };
+                  updateProfile('achievements', [...(profile.achievements || []), newAchievement]);
+                }}
+                className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+              >
+                + Add Achievement
+              </button>
+            </div>
+
+            {profile.achievements && profile.achievements.length > 0 ? (
+              <div className="space-y-3">
+                {profile.achievements.map((achievement, index) => (
+                  <div key={index} className="flex gap-4 items-start border border-gray-200 rounded-lg p-3">
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3">
+                      <div className="md:col-span-2">
+                        <input
+                          type="text"
+                          value={achievement.description}
+                          onChange={(e) => {
+                            const updated = [...(profile.achievements || [])];
+                            updated[index].description = e.target.value;
+                            updateProfile('achievements', updated);
+                          }}
+                          placeholder="Achievement description"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          value={achievement.metric || ''}
+                          onChange={(e) => {
+                            const updated = [...(profile.achievements || [])];
+                            updated[index].metric = e.target.value;
+                            updateProfile('achievements', updated);
+                          }}
+                          placeholder="Metric (e.g., 94%)"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = profile.achievements?.filter((_, i) => i !== index);
+                        updateProfile('achievements', updated);
+                      }}
+                      className="text-red-600 hover:text-red-800 text-sm mt-2"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">No achievements added yet.</p>
+            )}
+          </div>
+
           {/* Submit Button */}
           <div className="flex justify-end gap-4">
             <Link
