@@ -2,32 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Header from '@/components/Header';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">MaxCV</h1>
-            <nav className="space-x-4">
-              <Link
-                href="/profile"
-                className="text-gray-600 hover:text-gray-900 font-medium"
-              >
-                Profile
-              </Link>
-              <Link
-                href="/dashboard"
-                className="text-gray-600 hover:text-gray-900 font-medium"
-              >
-                Dashboard
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
