@@ -6,20 +6,42 @@ import Link from 'next/link';
 interface Application {
   id: string;
   jobTitle: string;
-  company: string;
+  companyName: string;
+  jobDescription: string;
   status: string;
   createdAt: string;
+  documents: Array<{
+    id: string;
+    type: string;
+    content: string;
+  }>;
 }
 
 export default function DashboardPage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState('hameda9795@gmail.com'); // Default email
 
   useEffect(() => {
-    // In a real app, this would fetch from the API
-    // For now, showing empty state
-    setLoading(false);
+    fetchApplications();
   }, []);
+
+  const fetchApplications = async () => {
+    try {
+      const response = await fetch(`/api/applications?email=${encodeURIComponent(email)}`);
+      const data = await response.json();
+
+      if (data.success) {
+        setApplications(data.applications);
+      } else {
+        console.error('Error fetching applications:', data.error);
+      }
+    } catch (error) {
+      console.error('Error fetching applications:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -180,32 +202,36 @@ export default function DashboardPage() {
                   className="px-6 py-4 hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <div>
+                    <div className="flex-1">
                       <h3 className="text-lg font-medium text-gray-900">
                         {app.jobTitle}
                       </h3>
-                      <p className="text-sm text-gray-600">{app.company}</p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {new Date(app.createdAt).toLocaleDateString()}
-                      </p>
+                      <p className="text-sm text-gray-600">{app.companyName}</p>
+                      <div className="flex items-center gap-4 mt-2">
+                        <p className="text-xs text-gray-500">
+                          Created: {new Date(app.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </p>
+                        {app.documents && app.documents.length > 0 && (
+                          <span className="text-xs text-green-600 font-medium">
+                            ✓ {app.documents.length} document{app.documents.length > 1 ? 's' : ''} generated
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          app.status === 'draft'
-                            ? 'bg-gray-100 text-gray-800'
-                            : app.status === 'applied'
-                            ? 'bg-blue-100 text-blue-800'
-                            : app.status === 'interview'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-green-100 text-green-800'
-                        }`}
-                      >
-                        {app.status}
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        Generated
                       </span>
-                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                        View
-                      </button>
+                      <Link
+                        href={`/application?id=${app.id}`}
+                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                      >
+                        View →
+                      </Link>
                     </div>
                   </div>
                 </div>
