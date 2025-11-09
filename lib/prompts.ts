@@ -12,15 +12,30 @@ export function generateCVPrompt(profile: UserProfile, job: JobPosting): string 
   const softSkills = keywords.softSkills.join(', ');
   const tools = keywords.tools.join(', ');
 
-  // Detect job level and special requirements
+  // Detect job level, special requirements, and language
   const jobLevel = detectJobLevel(job.description);
   const specialRequirements = extractSpecialRequirements(job.description);
+  const language = detectLanguage(job.description);
+
+  const languageInstruction = language === 'nl'
+    ? `**CRITICAL LANGUAGE REQUIREMENT:**
+The job description is in DUTCH. You MUST write the ENTIRE CV in DUTCH (Nederlands).
+- All section headings in Dutch: "PROFESSIONELE SAMENVATTING", "KERNCOMPETENTIES", "PROFESSIONELE ERVARING", "OPLEIDING", etc.
+- All content in Dutch
+- Professional Dutch language appropriate for the Netherlands job market
+- Use Dutch technical terms where appropriate, but keep technology names in English (e.g., "Java", "Spring Boot")
+`
+    : `**LANGUAGE:**
+The job description is in ENGLISH. Write the CV in ENGLISH.
+`;
 
   return `You are an expert ATS CV writer with deep knowledge of jobscan.co scoring algorithms. Your goal is to create a CV that scores 90+ on jobscan.co while remaining honest and professional.
 
 **CRITICAL OUTPUT INSTRUCTION:**
 Do NOT include ANY explanatory text, preamble, meta-commentary, or thinking at the beginning of your response. Do NOT write things like "Given the constraints..." or "Based on the requirements...".
 Start your output DIRECTLY with the candidate's full name. The first line of your output must be the candidate's name.
+
+${languageInstruction}
 
 ## JOB ANALYSIS (CRITICAL - READ FIRST):
 
@@ -217,11 +232,21 @@ ${job.description}
 Generate a complete, ready-to-use CV in PLAIN TEXT format. NO markdown formatting allowed.
 
 **CRITICAL FORMATTING RULES:**
-- Headings must be plain text in ALL CAPS (e.g., "PROFESSIONAL SUMMARY")
+- Headings must be plain text in ALL CAPS ${language === 'nl' ? '(e.g., "PROFESSIONELE SAMENVATTING")' : '(e.g., "PROFESSIONAL SUMMARY")'}
 - Do NOT use markdown symbols like ** or # for headings
 - Do NOT use bold markers (**text**)
 - Use simple bullet points (•)
 - Plain text only - the CV will be formatted by the display component
+
+${language === 'nl' ? `**DUTCH SECTION HEADINGS (use these exactly):**
+- PROFESSIONELE SAMENVATTING
+- KERNCOMPETENTIES
+- PROFESSIONELE ERVARING
+- OPLEIDING
+- PROFESSIONELE ONTWIKKELING
+- KERNDOELSTELLINGEN (if applicable)
+- ATS TREFWOORDEN
+` : ''}
 
 Use this EXACT structure:
 
@@ -456,10 +481,28 @@ NOW GENERATE THE CV - Start with the candidate's name:`;
  * Prompt for generating tailored cover letters
  */
 export function generateCoverLetterPrompt(profile: UserProfile, job: JobPosting): string {
+  const language = detectLanguage(job.description);
+
+  const languageInstruction = language === 'nl'
+    ? `**CRITICAL LANGUAGE REQUIREMENT:**
+The job description is in DUTCH. You MUST write the ENTIRE cover letter in DUTCH (Nederlands).
+- Start with "Geachte heer/mevrouw," or "Beste recruitmentteam,"
+- All content in professional Dutch
+- Appropriate for the Netherlands job market
+- Use Dutch phrases and expressions
+- Keep technology names in English (e.g., "Java", "Spring Boot")
+`
+    : `**LANGUAGE:**
+The job description is in ENGLISH. Write the cover letter in ENGLISH.
+- Start with "Dear Hiring Manager,"
+`;
+
   return `You are an expert cover letter writer for software engineering positions. Create a compelling, personalized cover letter that demonstrates genuine interest and strong fit.
 
 **CRITICAL OUTPUT INSTRUCTION:**
-Do NOT include ANY explanatory text, preamble, meta-commentary, or thinking at the beginning of your response. Start your output DIRECTLY with "Dear Hiring Manager,". Do NOT write things like "Here is the cover letter..." or "Based on the requirements...".
+Do NOT include ANY explanatory text, preamble, meta-commentary, or thinking at the beginning of your response. ${language === 'nl' ? 'Start your output DIRECTLY with "Geachte heer/mevrouw,"' : 'Start your output DIRECTLY with "Dear Hiring Manager,"'}. Do NOT write things like "Here is the cover letter..." or "Based on the requirements...".
+
+${languageInstruction}
 
 ## CANDIDATE PROFILE:
 ${JSON.stringify(profile, null, 2)}
@@ -513,7 +556,20 @@ Create a professional cover letter (250-350 words) following this structure:
 
 ## OUTPUT FORMAT:
 
-\`\`\`
+${language === 'nl' ? `\`\`\`
+Geachte heer/mevrouw,
+
+[Openingsparagraaf - Toon enthousiasme voor de functie]
+
+[Body paragraaf 1 - Relevante ervaring en projecten]
+
+[Body paragraaf 2 - Waarom je past bij hun behoeften]
+
+[Slotparagraaf - Interesse voor gesprek]
+
+Met vriendelijke groet,
+${profile.fullName}
+\`\`\`` : `\`\`\`
 Dear Hiring Manager,
 
 [Opening paragraph]
@@ -526,15 +582,16 @@ Dear Hiring Manager,
 
 Sincerely,
 ${profile.fullName}
-\`\`\`
+\`\`\``}
 
 **FINAL OUTPUT INSTRUCTIONS:**
 1. OUTPUT ONLY THE COVER LETTER TEXT - No explanations or preambles
-2. START DIRECTLY with "Dear Hiring Manager,"
+2. START DIRECTLY with ${language === 'nl' ? '"Geachte heer/mevrouw,"' : '"Dear Hiring Manager,"'}
 3. Use plain text, no markdown formatting
 4. The letter should be ready to copy-paste immediately
+5. Write in ${language === 'nl' ? 'DUTCH (Nederlands)' : 'ENGLISH'}
 
-NOW: Generate the complete cover letter following ALL requirements above. Start with "Dear Hiring Manager,":`;
+NOW: Generate the complete cover letter following ALL requirements above. Start with ${language === 'nl' ? '"Geachte heer/mevrouw,"' : '"Dear Hiring Manager,"'}`;
 }
 
 /**
@@ -745,4 +802,47 @@ function extractIndustry(jobDescription: string): string {
   }
 
   return 'Technology';
+}
+
+/**
+ * Detect language of job description (English or Dutch)
+ */
+function detectLanguage(jobDescription: string): 'en' | 'nl' {
+  const text = jobDescription.toLowerCase();
+
+  // Common Dutch words that are very distinctive
+  const dutchIndicators = [
+    /\b(wij|onze|voor|met|van|bij|zijn|naar|dat|een|het|de)\b/g,
+    /\b(werken|werkzaam|ervaring|kennis|functie|bedrijf|zoeken)\b/g,
+    /\b(jouw|jou|je|jezelf)\b/g,
+    /\b(ontwikkelaar|software|applicaties)\b/g,
+    /\b(verantwoordelijk|vaardigheden|teamspeler)\b/g,
+    /\b(opleiding|afgerond|aantoonbare)\b/g,
+  ];
+
+  // Common English words
+  const englishIndicators = [
+    /\b(we|our|you|your|with|for|and|the|this|that)\b/g,
+    /\b(work|working|experience|knowledge|position|company|looking)\b/g,
+    /\b(developer|software|applications)\b/g,
+    /\b(responsible|skills|team\s?player)\b/g,
+    /\b(education|completed|degree)\b/g,
+  ];
+
+  // Count matches
+  let dutchScore = 0;
+  let englishScore = 0;
+
+  dutchIndicators.forEach(pattern => {
+    const matches = text.match(pattern);
+    if (matches) dutchScore += matches.length;
+  });
+
+  englishIndicators.forEach(pattern => {
+    const matches = text.match(pattern);
+    if (matches) englishScore += matches.length;
+  });
+
+  // If Dutch score is higher, return 'nl', otherwise 'en'
+  return dutchScore > englishScore ? 'nl' : 'en';
 }
