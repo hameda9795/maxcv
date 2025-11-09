@@ -12,7 +12,32 @@ export function generateCVPrompt(profile: UserProfile, job: JobPosting): string 
   const softSkills = keywords.softSkills.join(', ');
   const tools = keywords.tools.join(', ');
 
+  // Detect job level and special requirements
+  const jobLevel = detectJobLevel(job.description);
+  const specialRequirements = extractSpecialRequirements(job.description);
+
   return `You are an expert ATS CV writer with deep knowledge of jobscan.co scoring algorithms. Your goal is to create a CV that scores 90+ on jobscan.co while remaining honest and professional.
+
+## JOB ANALYSIS (CRITICAL - READ FIRST):
+
+**Job Level Detected:** ${jobLevel}
+**Special Requirements:** ${specialRequirements}
+**Company/Industry:** ${job.company} - ${extractIndustry(job.description)}
+
+${jobLevel === 'junior' ? `
+**JUNIOR ROLE - CRITICAL TONE ADJUSTMENTS:**
+- Use "Junior", "Learning", "Eager to", "Interest in" language
+- Emphasize willingness to learn and adapt
+- Show awareness of what you're still learning
+- If job mentions specific onboarding path (IT Support → QA → Dev), EXPLICITLY address it
+- Focus on potential and growth trajectory, not just achievements
+` : ''}
+
+${specialRequirements ? `
+**SPECIAL REQUIREMENTS DETECTED:**
+${specialRequirements}
+**YOU MUST address these explicitly in a ROLE ALIGNMENT section**
+` : ''}
 
 ## JOBSCAN.CO OPTIMIZATION REQUIREMENTS (CRITICAL):
 
@@ -192,8 +217,19 @@ Generate a complete, ready-to-use CV in plain text format. Use this EXACT struct
 [Email] | [Phone] | [Location]
 
 PROFESSIONAL SUMMARY
-[3-4 lines with: job title match + top 5-7 hard skills + 2-3 soft skills + key metrics]
-EXAMPLE: "Java Software Engineer with 6 months intensive professional development and 14 years engineering background. Expertise in Java, Spring Boot, SQL databases (PostgreSQL, DB2, MySQL), Git, and Gradle. Passionate about writing scalable, maintainable code with strong analytical skills. Proven experience in agile development, sprint planning, and cross-functional team collaboration with business analysts, developers, and testers. Delivered production systems serving 500+ concurrent users with <2s response times and 85% test coverage."
+[3-4 lines tailored to job level and requirements]
+
+${jobLevel === 'junior' ? `
+JUNIOR ROLE EXAMPLE: "[Job Title] focused on [specific domain from job]. [X months/years] professional development ([training details]) plus [Y years] prior [field] experience that sharpened [transferable skills]. Delivered [X] production apps with [key metrics]. Strong interest in [specific technologies mentioned in job]; ${specialRequirements?.includes('IT Support') ? 'open to onboarding path that starts with IT Support and QA to master the platform before transitioning fully into development role.' : 'eager to deepen knowledge in [learning areas].'}"
+` : `
+MID/SENIOR ROLE EXAMPLE: "Java Software Engineer with [X] years experience in [specific domain]. Expertise in Java, Spring Boot, SQL databases (PostgreSQL, DB2, MySQL), Git, and Gradle. Passionate about writing scalable, maintainable code with strong analytical skills. Proven experience in agile development, sprint planning, and cross-functional team collaboration with business analysts, developers, and testers. Delivered production systems serving 500+ concurrent users with <2s response times and 85% test coverage."
+`}
+
+[CRITICAL:
+- For JUNIOR roles: emphasize learning, interest, willingness, transitioning, growth potential
+- For SENIOR roles: emphasize expertise, leadership, achievements, scale
+- Always mention specific domain/industry if clear from job description
+- If special onboarding path mentioned, acknowledge it explicitly]
 
 CORE COMPETENCIES
 [List ALL matching keywords from job description, grouped by category. CRITICAL: Include SQL separately + specific databases]
@@ -216,7 +252,17 @@ REST API (Representational State Transfer) | Microservices Architecture | Perfor
 Engineering Practices:
 Code Review | Technical Documentation | Bug Resolution | Engineering Practices | Debugging
 
-[CRITICAL: Use EXACT terms from job description, include both acronyms and full forms]
+${jobLevel === 'junior' || specialRequirements ? `
+Learning & Development:
+[List technologies mentioned in job that you're learning or interested in]
+e.g., "Apache Kafka (learning)" | "IoT/Streaming (learning)" | "Event-Driven Architecture (deepening knowledge)"
+` : ''}
+
+[CRITICAL:
+- Use EXACT terms from job description, include both acronyms and full forms
+- For junior roles or when job emphasizes learning, add "Learning & Development" section
+- Show what you're currently learning that's relevant to the role
+- Use phrases like "(learning)", "(deepening knowledge)", "(eager to learn)"]
 
 PROFESSIONAL EXPERIENCE
 
@@ -266,10 +312,27 @@ EDUCATION
 [Degree] | [Institution] | [Location] | [Year]
 [Degree] | [Institution] | [Location] | [Year]
 
-[Optional: PROFESSIONAL DEVELOPMENT]
+PROFESSIONAL DEVELOPMENT
 [Bootcamp/Training] | [Organization] | [Dates] | [Hours/Intensity]
 
+${specialRequirements || jobLevel === 'junior' ? `
+ROLE ALIGNMENT ([Job Title])
+[CRITICAL - This section directly addresses job-specific requirements]
+• [Address specific industry interest] - e.g., "Interested in IoT event-driven data processing and real-time telemetry"
+• [Address learning path] - e.g., "Apache Kafka learning path underway" or "Eager to deepen knowledge in [specific tech]"
+• [Address special requirements] - If job mentions onboarding path (IT Support → QA → Developer), say: "Willing to start via IT Support + QA onboarding to learn the platform before transitioning into junior role"
+• [Show domain awareness] - Mention company's domain/industry and express genuine interest
+• [List compatible skills already have] - Comfortable with Docker, CI/CD, PostgreSQL
+[Make this section conversational and show you READ and UNDERSTOOD the job posting]
+` : ''}
+
+ATS KEYWORDS
+[List all relevant keywords in a comma-separated format for maximum ATS scanning]
+${hardSkills} | ${tools} | ${softSkills} | Agile/Scrum | [Add job-specific terms like IoT, Streaming, Real-Time, etc. if relevant] | [Add industry-specific terms] | [Add any special requirements keywords]
+
 [Optional: CERTIFICATIONS - if relevant to job]
+
+[Optional: REFERENCES - "Available upon request"]
 \`\`\`
 
 **CRITICAL FORMATTING RULES:**
@@ -577,4 +640,72 @@ function extractContextKeywords(text: string): string[] {
 export function extractJobKeywords(jobDescription: string): string[] {
   const keywords = extractAdvancedKeywords(jobDescription);
   return keywords.allKeywords;
+}
+
+/**
+ * Detect job seniority level
+ */
+function detectJobLevel(jobDescription: string): string {
+  const text = jobDescription.toLowerCase();
+
+  if (/\b(junior|entry[\s-]level|graduate|trainee|intern)\b/i.test(text)) {
+    return 'junior';
+  } else if (/\b(senior|lead|principal|staff|architect)\b/i.test(text)) {
+    return 'senior';
+  } else if (/\b(mid[\s-]level|medior|intermediate)\b/i.test(text)) {
+    return 'mid-level';
+  }
+
+  return 'mid-level'; // default
+}
+
+/**
+ * Extract special requirements (onboarding paths, specific expectations)
+ */
+function extractSpecialRequirements(jobDescription: string): string {
+  const requirements: string[] = [];
+  const text = jobDescription;
+
+  // Detect onboarding/progression paths
+  if (/support.*qa|qa.*support|start.*support|begin.*support/i.test(text)) {
+    requirements.push('- Onboarding path detected: May start with IT Support/QA before full development role');
+  }
+
+  if (/traineeship|training.*program|onboarding.*path/i.test(text)) {
+    requirements.push('- Traineeship/training program mentioned');
+  }
+
+  // Detect learning emphasis
+  if (/willing to learn|eager to learn|interest in learning/i.test(text)) {
+    requirements.push('- Emphasis on willingness to learn');
+  }
+
+  // Detect specific tech learning
+  const learningTech = text.match(/learning\s+(\w+)|interest in\s+(\w+)/gi);
+  if (learningTech) {
+    requirements.push(`- Learning interests: ${learningTech.join(', ')}`);
+  }
+
+  return requirements.length > 0 ? requirements.join('\n') : '';
+}
+
+/**
+ * Extract industry/domain from job description
+ */
+function extractIndustry(jobDescription: string): string {
+  const text = jobDescription.toLowerCase();
+
+  if (/\b(iot|internet of things|telemetry|sensor|device|embedded)\b/i.test(text)) {
+    return 'IoT / Embedded Systems';
+  } else if (/\b(fintech|financial|banking|payment)\b/i.test(text)) {
+    return 'FinTech / Finance';
+  } else if (/\b(water|utilities|energy|infrastructure)\b/i.test(text)) {
+    return 'Utilities / Infrastructure';
+  } else if (/\b(healthcare|medical|health)\b/i.test(text)) {
+    return 'Healthcare';
+  } else if (/\b(e-commerce|retail|marketplace)\b/i.test(text)) {
+    return 'E-commerce';
+  }
+
+  return 'Technology';
 }
