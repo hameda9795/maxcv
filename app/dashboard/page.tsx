@@ -21,6 +21,7 @@ export default function DashboardPage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('hameda9795@gmail.com'); // Default email
+  const [deleting, setDeleting] = useState<string | null>(null); // Track which app is being deleted
 
   useEffect(() => {
     fetchApplications();
@@ -40,6 +41,34 @@ export default function DashboardPage() {
       console.error('Error fetching applications:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async (applicationId: string, jobTitle: string) => {
+    if (!confirm(`Are you sure you want to delete the application for "${jobTitle}"? This will also delete all associated documents.`)) {
+      return;
+    }
+
+    setDeleting(applicationId);
+
+    try {
+      const response = await fetch(`/api/applications/${applicationId}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Remove from local state
+        setApplications(applications.filter(app => app.id !== applicationId));
+      } else {
+        alert('Error deleting application: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error deleting application:', error);
+      alert('Error deleting application');
+    } finally {
+      setDeleting(null);
     }
   };
 
@@ -230,8 +259,16 @@ export default function DashboardPage() {
                         href={`/application?id=${app.id}`}
                         className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                       >
-                        View →
+                        View
                       </Link>
+                      <button
+                        onClick={() => handleDelete(app.id, app.jobTitle)}
+                        disabled={deleting === app.id}
+                        className="text-red-600 hover:text-red-800 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                        title="Delete application"
+                      >
+                        {deleting === app.id ? 'Deleting...' : 'Delete'}
+                      </button>
                     </div>
                   </div>
                 </div>
