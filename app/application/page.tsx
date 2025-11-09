@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import CVFormatter from '@/components/CVFormatter';
+import { exportToPDF, exportToDOCX, generateFileName } from '@/lib/cvExport';
 
 export default function ApplicationPage() {
   const [email, setEmail] = useState('hameda9795@gmail.com');
@@ -270,16 +272,28 @@ export default function ApplicationPage() {
               <div className="bg-white shadow rounded-lg p-6">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold">Generated CV</h2>
-                  <button
-                    onClick={() => copyToClipboard(generatedCV)}
-                    className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md"
-                  >
-                    Copy to Clipboard
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => copyToClipboard(generatedCV)}
+                      className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md"
+                    >
+                      📋 Copy
+                    </button>
+                    <button
+                      onClick={() => exportToPDF(generatedCV, generateFileName(companyName, 'pdf'))}
+                      className="px-4 py-2 text-sm bg-red-500 text-white hover:bg-red-600 rounded-md"
+                    >
+                      📄 PDF
+                    </button>
+                    <button
+                      onClick={() => exportToDOCX(generatedCV, generateFileName(companyName, 'docx'))}
+                      className="px-4 py-2 text-sm bg-blue-500 text-white hover:bg-blue-600 rounded-md"
+                    >
+                      📝 DOCX
+                    </button>
+                  </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <pre className="whitespace-pre-wrap text-sm font-mono">{generatedCV}</pre>
-                </div>
+                <CVFormatter cvText={generatedCV} />
               </div>
             )}
 
@@ -288,15 +302,31 @@ export default function ApplicationPage() {
               <div className="bg-white shadow rounded-lg p-6">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold">Generated Cover Letter</h2>
-                  <button
-                    onClick={() => copyToClipboard(generatedCoverLetter)}
-                    className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md"
-                  >
-                    Copy to Clipboard
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => copyToClipboard(generatedCoverLetter)}
+                      className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md"
+                    >
+                      📋 Copy
+                    </button>
+                    <button
+                      onClick={() => exportToPDF(generatedCoverLetter, generateFileName(companyName + '-CoverLetter', 'pdf'))}
+                      className="px-4 py-2 text-sm bg-red-500 text-white hover:bg-red-600 rounded-md"
+                    >
+                      📄 PDF
+                    </button>
+                    <button
+                      onClick={() => exportToDOCX(generatedCoverLetter, generateFileName(companyName + '-CoverLetter', 'docx'))}
+                      className="px-4 py-2 text-sm bg-blue-500 text-white hover:bg-blue-600 rounded-md"
+                    >
+                      📝 DOCX
+                    </button>
+                  </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <pre className="whitespace-pre-wrap text-sm">{generatedCoverLetter}</pre>
+                <div className="bg-white p-6 rounded border border-gray-200">
+                  <div className="whitespace-pre-wrap text-sm leading-relaxed font-sans">
+                    {generatedCoverLetter}
+                  </div>
                 </div>
               </div>
             )}
